@@ -1,0 +1,51 @@
+main.container{
+    padding-top: 60px;
+}
+
+.like-count {
+    font-size: 20px;
+    padding: 5px;
+    margin-left: 15px;
+}
+
+.tag{
+    padding-right: 17px;
+    padding-bottom: 18px;
+    font-size:23px;
+}
+
+.tags{
+    padding-bottom: 9px;
+}
+.best_members{
+    padding-top: 30px;
+}
+.member{
+     color: #0a53be;
+    font-size: 17px;
+    padding-bottom: 8px;
+}
+
+.question{
+    border: solid;
+    border-color: #1a1d20;
+    padding-top: 20px;
+    padding-bottom:20px;
+    margin-bottom: 30px;
+}
+.questionpanel{
+    margin-left:20px;
+}
+
+.question_text_urls{
+    margin-top: 25px;
+}
+
+.ask_question{
+    margin-bottom: 35px;
+}
+.pole_for_question{
+    border: solid;
+    border-color: black;
+    border-width: 2px;
+}
