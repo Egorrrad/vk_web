@@ -49,3 +49,10 @@ main.container{
     border-color: black;
     border-width: 2px;
 }
+
+.pole_for_log{
+    border: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 300px;
+}
