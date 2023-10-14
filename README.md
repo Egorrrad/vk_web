@@ -4,4 +4,5 @@
 
 hw1 - статическая верстка
 
-[index.html]https://github.com/Egorrrad/vk_web.git
+[index.html](https://github.com/Egorrrad/vk_web/blob/main/templates/index.html)
+
