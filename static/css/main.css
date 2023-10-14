@@ -1,51 +1,70 @@
-main.container{
+main.container {
     padding-top: 60px;
 }
 
 .like-count {
     font-size: 20px;
-    padding: 5px;
-    margin-left: 15px;
+    padding: 3px;
+    position: absolute;
+    margin-left: 18px;
 }
 
-.tag{
+button.like-button {
+    border-radius: 10px;
+    width: 55px;
+    padding-left: 10px;
+    margin-left: 2px;
+}
+
+.tag {
     padding-right: 17px;
     padding-bottom: 18px;
-    font-size:23px;
+    font-size: 23px;
 }
 
-.tags{
+.tags {
     padding-bottom: 9px;
 }
-.best_members{
+
+.best_members {
     padding-top: 30px;
 }
-.member{
-     color: #0a53be;
+
+.member {
+    color: #0a53be;
     font-size: 17px;
     padding-bottom: 8px;
 }
 
-.question{
+.question {
     border: solid;
     border-color: #1a1d20;
     padding-top: 20px;
-    padding-bottom:20px;
+    padding-bottom: 20px;
     margin-bottom: 30px;
 }
-.questionpanel{
-    margin-left:20px;
+
+.questionpanel {
+    margin-left: 20px;
 }
 
-.question_text_urls{
+.question_text_urls {
     margin-top: 25px;
 }
 
-.ask_question{
+.ask_question {
     margin-bottom: 35px;
 }
-.pole_for_question{
+
+.pole_for_question {
     border: solid;
     border-color: black;
     border-width: 2px;
+}
+
+.pole_for_log {
+    border: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 300px;
 }
