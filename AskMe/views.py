@@ -10,7 +10,7 @@ def index(request):
     # переменной контекста context
     return render(
         request,
-        'index1.html'
+        'index.html'
     )
 
 
