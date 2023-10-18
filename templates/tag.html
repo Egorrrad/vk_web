@@ -1,49 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/main.css">
-    <title>Tag</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-        <div class="col-2">
-            <a class="navbar-brand" style="margin-left:90px" href="#">
-                AskMe
-            </a>
-        </div>
-        <div class="col-7">
-            <form class="d-flex" role="search" style="margin-left: 70px">
-                <input style="width:580px" class="form-control me-2" type="search" placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-
-        <div class="col-3">
-            <div class="row" style="width: auto;margin-left: 30%">
-                <div class="col-2" style="margin-right: 10px">
-                    <img src="/static/img/pingvin.png" alt="Logo" width="50" height="44"
-                         class="d-inline-block align-text-top">
-                </div>
-                <div class="col-8" style="margin-left: 20px">
-                    <a style="color:#fff">Dr. Pepper</a>
-                    <div class="row-cols-3">
-                        <a href="/" style="color:#fff">settings</a>
-                        <a href="/" style="color:#fff ">log out</a>
-                    </div>
-                </div>
-            </div>
+{% extends "base.html" %}
 
 
-        </div>
-    </div>
+{% block title %}Tag{% endblock %}
 
-</nav>
-
-<main class="container">
+{% block main %}
     <div class="container">
         <div class="row">
             <div class="col-8" style="margin-right: 105px">
@@ -66,15 +26,15 @@
                                         </svg>
                                         <span class="visually-hidden">Button</span>
                                     </button>
-                                    <!--
-                                    <button type="button" class="btn btn-outline-secondary">
+
+                                    <button type="button" class="btn btn-outline-secondary dislike-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                              class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
                                             <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z"></path>
                                         </svg>
                                         <span class="visually-hidden">Button</span>
                                     </button>
-                                    -->
+
                                     <span class="like-count">0</span>
                                 </div>
                             </div>
@@ -274,19 +234,8 @@
             </li>
         </ul>
     </nav>
-</main>
+{% endblock %}
 
-
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-body-secondary">© 2023 AskMe</p>
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-        </ul>
-    </footer>
-</div>
-
+{% block scripts %}
 <script src="/static/js/like-counter.js"></script>
-</body>
-</html>
+{% endblock %}

@@ -11,7 +11,14 @@ main.container {
 
 button.like-button {
     border-radius: 10px;
-    width: 55px;
+    width: 35px;
+    padding-left: 10px;
+    margin-left: 2px;
+}
+
+button.dislike-button{
+    border-radius: 10px;
+    width: 35px;
     padding-left: 10px;
     margin-left: 2px;
 }

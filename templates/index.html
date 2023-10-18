@@ -3,7 +3,6 @@
 {% block title %}AskMe{% endblock %}
 
 {% block main %}
-<main class="container">
     <div class="container">
         <div class="row">
             <div class="col-8" style="margin-right: 105px">
@@ -237,5 +236,8 @@
             </li>
         </ul>
     </nav>
-</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/like-counter.js"></script>
 {% endblock %}
