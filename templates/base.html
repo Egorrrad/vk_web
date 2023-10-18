@@ -8,6 +8,7 @@
     <title>{% block title %}AskMe{% endblock %}</title>
 </head>
 <body>
+{% block navbar %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <div class="col-2">
@@ -43,7 +44,7 @@
     </div>
 
 </nav>
-
+{% endblock %}
 <main class="container">
 {% block main %}
 
