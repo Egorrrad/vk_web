@@ -3,10 +3,12 @@ from AskMe import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('ask', views.ask),
-    path('login', views.login),
-    path('question', views.question),
-    path('signup', views.signup),
-    path('tag', views.tag),
-    path('settings', views.settings),
+    path('ask', views.ask, name='ask'),
+    path('login', views.login, name='login'),
+    path('question/<int:question_id>', views.question, name='question'),
+    path('signup', views.signup, name='signup'),
+    path('tag', views.tag, name='tag'),
+    path('settings', views.settings, name='settings'),
+
+    path('test', views.test)
 ]

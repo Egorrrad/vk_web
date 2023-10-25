@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 
 {% block title %}Ask{% endblock %}
@@ -15,15 +15,21 @@
             <div class="col-8" style="margin-right: 105px">
                 <div class="row ask_question">
                     <h6 class="col-1">Title</h6>
-                    <input class="col-9 pole_for_question" type="text">
+                    <label>
+                        <input class="col-9 pole_for_question" type="text">
+                    </label>
                 </div>
                 <div class="row ask_question">
                     <h6 class="col-1">Text</h6>
-                    <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
+                    <label>
+                        <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
+                    </label>
                 </div>
                 <div class="row ask_question">
                     <h6 class="col-1">Tags</h6>
-                    <input class="col-9 pole_for_question" type="text">
+                    <label>
+                        <input class="col-9 pole_for_question" type="text">
+                    </label>
                 </div>
                 <button style="margin-left: 60px">ASK!</button>
             </div>
