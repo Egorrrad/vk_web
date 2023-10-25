@@ -27,7 +27,7 @@ from django.urls import include
 from django.urls import path
 
 urlpatterns += [
-     path('AskMe/', include('AskMe.urls')),
+     path('', include('AskMe.urls')),
 
 ]
 
