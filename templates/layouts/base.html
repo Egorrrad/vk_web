@@ -49,9 +49,27 @@
     </nav>
 {% endblock %}
 <main class="container">
-    {% block main %}
+    <div class="container">
+        <div class="row">
 
-    {% endblock %}
+        <div class="col-8" style="margin-right: 105px">
+            {% block left-side %}
+
+            {% endblock %}
+         </div>
+
+        <div class="col-3">
+            {% block right-side %}
+
+                    {% include 'components/tags.html' %}
+                    {% include 'components/best_members.html' %}
+
+            {% endblock %}
+        </div>
+        </div>
+    </div>
+{% block pagination %}
+{% endblock %}
 </main>
 
 {% block scripts %}

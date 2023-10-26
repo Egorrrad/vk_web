@@ -1,34 +1,35 @@
 <nav>
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" onclick="previouspage()" aria-label="Предыдущая">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            {% for page in pages %}
-             <li class="page-item"><a class="page-link" href="/?page={{ page }}">{{ page }}</a></li>
-            {% endfor %}
-            <li class="page-item">
-                <a class="page-link" onclick="nextpage()" aria-label="Следующая">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" onclick="previouspage()" aria-label="Предыдущая">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for page in pages %}
+            <li class="page-item"><a class="page-link" href="/?page={{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link" onclick="nextpage()" aria-label="Следующая">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <script>
 
-    function nextpage(){
+    function nextpage() {
         const url = new URL(window.location);
-        var page_num = parseInt(url.searchParams.get('page'))+1;
-        window.location.href = '/?page='+page_num;
+        var page_num = parseInt(url.searchParams.get('page')) + 1;
+        window.location.href = '/?page=' + page_num;
     }
-    function previouspage(){
+
+    function previouspage() {
         const url = new URL(window.location);
-        var page_num = parseInt(url.searchParams.get('page'))-1;
-        if (page_num<1){
-            page_num=1;
+        var page_num = parseInt(url.searchParams.get('page')) - 1;
+        if (page_num < 1) {
+            page_num = 1;
         }
-        window.location.href = '/?page='+page_num;
+        window.location.href = '/?page=' + page_num;
     }
 </script>

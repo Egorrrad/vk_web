@@ -1,9 +1,12 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %}AskMe{% endblock %}
+{% block title %}Hot questions{% endblock %}
 
-{% block left-side %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8" style="margin-right: 105px">
                 <div class="row" style="margin-bottom: 60px">
                     <div class="col-4">
                         <h2>New Questions</h2>
@@ -19,10 +22,14 @@
                     {% include 'components/question-item.html' %}
                 {% endfor %}
 
-{% endblock %}
+            </div>
+        </div>
 
-{% block pagination%}
-{% include 'components/pagination.html' %}
+    </div>
+
+
+    {% include 'components/pagination.html' %}
+
 {% endblock %}
 
 {% block scripts %}
