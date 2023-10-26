@@ -31,4 +31,6 @@ urlpatterns += [
 
 ]
 
+handler404 = "AskMe.views.page_not_found_view"
+
 # Добавьте URL соотношения, чтобы перенаправить запросы с корневого URL, на URL приложения
