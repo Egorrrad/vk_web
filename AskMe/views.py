@@ -17,7 +17,8 @@ def paginate(request, objects, per_page=5):
     num_page=1
     pages_pagination = []
     try:
-        page = request.GET.get('page')
+        #лучше использовать метод get, иначе исключения ловить надо
+        page = request.GET.get('page', 1) # дефолтное значение для get
         # можно закинуть сюда request
         # добавить обработку отсутсвтия страницы
         paginator = Paginator(objects, per_page)

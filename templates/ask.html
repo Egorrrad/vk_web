@@ -3,63 +3,32 @@
 
 {% block title %}Ask{% endblock %}
 
-{% block main %}
+{% block left-side %}
+
     <div class="row" style="padding-bottom: 50px">
         <div class="col-4">
             <h2>New Question</h2>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8" style="margin-right: 105px">
-                <div class="row ask_question">
-                    <h6 class="col-1">Title</h6>
-                    <label>
-                        <input class="col-9 pole_for_question" type="text">
-                    </label>
-                </div>
-                <div class="row ask_question">
-                    <h6 class="col-1">Text</h6>
-                    <label>
-                        <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
-                    </label>
-                </div>
-                <div class="row ask_question">
-                    <h6 class="col-1">Tags</h6>
-                    <label>
-                        <input class="col-9 pole_for_question" type="text">
-                    </label>
-                </div>
-                <button style="margin-left: 60px">ASK!</button>
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <h3 style="padding-bottom: 20px">Popular Tags</h3>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">perl</span>
-                        <span class="tag" style="color:red">python</span>
-                        <span class="tag" style="color:black">TechnoPark</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:darkred">MySQL</span>
-                        <span class="tag" style="color:forestgreen">django</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">Mail.Ru</span>
-                        <span class="tag" style="color:darkcyan">Firefox</span>
-                    </div>
-                </div>
-                <div class="row best_members">
-                    <h3 style="padding-bottom: 20px">Best Members</h3>
-                    <a class="member" href="/">Member 1</a>
-                    <a class="member" href="/">Member 2</a>
-                    <a class="member" href="/">Member 3</a>
-                    <a class="member" href="/">Member 4</a>
-                    <a class="member" href="/">Member 5</a>
-                    <a class="member" href="/">Member 6</a>
-                </div>
-            </div>
-        </div>
+    <div class="row ask_question">
+        <h6 class="col-1">Title</h6>
+        <label>
+            <input class="col-9 pole_for_question" type="text">
+        </label>
     </div>
+    <div class="row ask_question">
+        <h6 class="col-1">Text</h6>
+        <label>
+            <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
+        </label>
+    </div>
+    <div class="row ask_question">
+        <h6 class="col-1">Tags</h6>
+        <label>
+            <input class="col-9 pole_for_question" type="text">
+        </label>
+    </div>
+    <button>ASK!</button>
 {% endblock %}
+
