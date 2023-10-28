@@ -6,7 +6,7 @@
             </a>
         </li>
         {% for page in pages %}
-            <li class="page-item"><a class="page-link" href="/?page={{ page }}">{{ page }}</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
         {% endfor %}
         <li class="page-item">
             <a class="page-link" onclick="nextpage()" aria-label="Следующая">
@@ -20,16 +20,19 @@
 
     function nextpage() {
         const url = new URL(window.location);
-        var page_num = parseInt(url.searchParams.get('page')) + 1;
-        window.location.href = '/?page=' + page_num;
+        let page_num = parseInt(url.searchParams.get('page')) + 1;
+        if (isNaN(page_num)){
+            page_num = 1;
+        }
+        window.location.href = '?page=' + page_num;
     }
 
     function previouspage() {
         const url = new URL(window.location);
-        var page_num = parseInt(url.searchParams.get('page')) - 1;
-        if (page_num < 1) {
+        let page_num = parseInt(url.searchParams.get('page')) - 1;
+        if (page_num < 1 || isNaN(page_num)){
             page_num = 1;
         }
-        window.location.href = '/?page=' + page_num;
+        window.location.href = '?page=' + page_num;
     }
 </script>

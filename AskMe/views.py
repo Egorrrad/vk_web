@@ -1,12 +1,37 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
+question1 = {
+    "id",
+    "title",
+    "content",
+    "answers_count",
+    "answers",
+    "tags"
+}
+
+
+def makeQuestion(id: int, title: str, image_path: str, content: str, answers_count: int, answers: list, tags: list):
+    question = {
+        "id": id,
+        "title": title,
+        "image": image_path,
+        "content": content,
+        "answers_count": answers_count,
+        "answers": answers,
+        "tags": tags
+    }
+    return question
+
+
 questions = [
     {
         "id": i,
         "title": f"quesion {i}",
         "content": f"aaaaaaaa {i}",
-        "answers": i,
+        "image": "img/bobr.jpeg",
+        "answers_count": i,
+        "answers": ["aaaaa", "aaaaaa"],
         "tags": ["tag1", "tag2"]
     } for i in range(10)
 ]
@@ -14,11 +39,11 @@ questions = [
 
 def paginate(request, objects, per_page=5):
     result = None
-    num_page=1
+    num_page = 1
     pages_pagination = []
     try:
-        #лучше использовать метод get, иначе исключения ловить надо
-        page = request.GET.get('page', 1) # дефолтное значение для get
+        # лучше использовать метод get, иначе исключения ловить надо
+        page = request.GET.get('page', 1)  # дефолтное значение для get
         # можно закинуть сюда request
         # добавить обработку отсутсвтия страницы
         paginator = Paginator(objects, per_page)
@@ -38,22 +63,31 @@ def paginate(request, objects, per_page=5):
     return result, pages_pagination
 
 
-def index(request):
-    """
-    Функция отображения для домашней страницы сайта.
-    """
-    questionslist, pages = paginate(request, questions)
+def isEmptyQuestions(request, questionslist, pages_counter):
     if questionslist is None:
         return render(
             request,
             'errors/not_found_page.html',
-            context={'pages': pages}
+            context={'pages': pages_counter}
         )
+    return 0
+
+
+def index(request):
+    """
+    Функция отображения для домашней страницы сайта.
+    """
+
+    questionslist, pages_counter = paginate(request, questions)
+
+    result = isEmptyQuestions(request, questionslist, pages_counter)
+    if result != 0:
+        return result
 
     return render(
         request,
         'index.html',
-        context={'questions': questionslist, 'pages': pages}
+        context={'questions': questionslist, 'pages': pages_counter}
     )
 
 
@@ -97,17 +131,40 @@ def signup(request):
     )
 
 
-def tag(request):
+def tag(request, tag_name):
+    questions_with_tag = []
+    for k in questions:
+        if tag_name in k["tags"]:
+            questions_with_tag.append(k)
+
+    if len(questions_with_tag)==0:
+        return render(
+            request,
+            'errors/not_found_tag.html',
+            context={'tag': tag_name}
+        )
+
+    questionslist, pages_counter = paginate(request, questions_with_tag)
+    result = isEmptyQuestions(request, questionslist, pages_counter)
+    if result != 0:
+        return result
+
     return render(
         request,
-        'tag.html'
+        'tag.html',
+        context={'tag': tag_name, 'questions': questionslist, 'pages': pages_counter}
     )
 
 
 def hot(request):
+    questionslist, pages_counter = paginate(request, questions)
+    result = isEmptyQuestions(request, questionslist, pages_counter)
+    if result != 0:
+        return result
     return render(
         request,
-        'hot_questions.html'
+        'hot_questions.html',
+        context={'questions': questionslist, 'pages': pages_counter}
     )
 
 

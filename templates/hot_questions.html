@@ -3,16 +3,13 @@
 
 {% block title %}Hot questions{% endblock %}
 
-{% block main %}
-    <div class="container">
-        <div class="row">
-            <div class="col-8" style="margin-right: 105px">
+            {% block left-side %}
                 <div class="row" style="margin-bottom: 60px">
                     <div class="col-4">
-                        <h2>New Questions</h2>
+                        <h2>Hot Questions</h2>
                     </div>
                     <div class="col-3" style="margin-top: 12px">
-                        <a href="/">Hot Questions</a>
+                        <a href='{% url 'index' %}'>New Questions</a>
                     </div>
                 </div>
 
@@ -22,14 +19,10 @@
                     {% include 'components/question-item.html' %}
                 {% endfor %}
 
-            </div>
-        </div>
+{% endblock %}
 
-    </div>
-
-
-    {% include 'components/pagination.html' %}
-
+{% block pagination %}
+{% include 'components/pagination.html' %}
 {% endblock %}
 
 {% block scripts %}
