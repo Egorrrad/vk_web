@@ -2,7 +2,11 @@
 const likes = document.querySelectorAll('.like');
 
 // В каждом элементе выбираем плюс и минус. Навешиваем на событие клик функцию render()
+
 likes.forEach(like => {
+
+  //получаем id вопроса
+  const id = like.id.split('_')[1];
   const plus = like.querySelector('.like-button');
 
   const minus = like.querySelector('.dislike-button');
@@ -13,6 +17,8 @@ likes.forEach(like => {
 
   plus.addEventListener('click', () => {
     render(++counter, counter_element);
+
+
   });
 
   minus.addEventListener('click', () => {

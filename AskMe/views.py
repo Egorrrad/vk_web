@@ -74,6 +74,7 @@ def index(request):
     Функция отображения для домашней страницы сайта.
     """
 
+    questions = Question.objects.all()
     questionslist, pages_counter = paginate(request, questions)
 
     result = isEmptyQuestions(request, questionslist, pages_counter)
@@ -104,7 +105,6 @@ def ask(request):
             # create a form instance and populate it with data from the request:
             form = QuestionForm(request.POST)
 
-
             # check whether it's valid:
             if form.is_valid():
                 # process the data in form.cleaned_data as required
@@ -114,7 +114,7 @@ def ask(request):
 
                 post_question1 = Question(title=data["title"], content=data["content"], image="img/bobr.jpeg",
                                           answers_count=0,
-                                          tags=data["tags"], answers="Answers ddfdfdfd")
+                                          tags=data["tags"], answers="Answers ddfdfdfd", likecount=0)
                 post_question1.save()
                 id = post_question1.id
 
@@ -132,8 +132,6 @@ def ask(request):
             )
     except Exception as e:
         print(e)
-
-
 
 
 def login(request):
@@ -193,6 +191,7 @@ def tag(request, tag_name):
 
 
 def hot(request):
+    questions = Question.objects.all()
     questionslist, pages_counter = paginate(request, questions)
     result = isEmptyQuestions(request, questionslist, pages_counter)
     if result != 0:
@@ -201,19 +200,6 @@ def hot(request):
         request,
         'hot_questions.html',
         context={'questions': questionslist, 'pages': pages_counter}
-    )
-
-
-def post_question(request):
-    # if this is a POST request we need to process the form data
-    if request.method == "POST":
-        print(request.POST)
-
-
-def test(request):
-    return render(
-        request,
-        'test.html'
     )
 
 

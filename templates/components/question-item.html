@@ -4,7 +4,7 @@
         <img src='{% static item.image %}' width="130" height="130">
         <div style="padding-top: 9px">
             <div class="row" style="margin-top: 10px">
-                <div class="like">
+                <div class="like" id='like_{{ item.id }}'>
                     <button type="button" class="btn btn-outline-secondary like-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                              fill="currentColor"
@@ -22,7 +22,7 @@
                         <span class="visually-hidden">Button</span>
                     </button>
 
-                    <span class="like-count">0</span>
+                    <span class="like-count">{{ item.likecount }}</span>
                 </div>
             </div>
 
