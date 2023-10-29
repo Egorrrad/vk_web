@@ -11,24 +11,51 @@
         </div>
     </div>
 
-    <div class="row ask_question">
-        <h6 class="col-1">Title</h6>
-        <label>
-            <input class="col-9 pole_for_question" type="text">
-        </label>
-    </div>
-    <div class="row ask_question">
-        <h6 class="col-1">Text</h6>
-        <label>
-            <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
-        </label>
-    </div>
-    <div class="row ask_question">
-        <h6 class="col-1">Tags</h6>
-        <label>
-            <input class="col-9 pole_for_question" type="text">
-        </label>
-    </div>
-    <button>ASK!</button>
+<form action='{% url 'ask' %}' method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="row ask_question">
+        <div class = "col-1" style="margin-right: 10px">
+            {{ field.label }}
+        </div>
+    {{ field }}
+        </div>
+    {% endfor %}
+    <input style="margin-left: 70px" type="submit" value="ASK!">
+</form>
+
+
+
+
+    <form method="POST" action='{% url 'ask' %}'>
+        {% csrf_token %}
+
+        <div class="row ask_question">
+            {{ form.title.errors }}
+            <label for='{{ form.title.id_for_label }}'><h6 class="col-1">Title</h6></label>
+            <input id='{{ form.title.id_for_label }}' class="col-9 pole_for_question" type="text">
+        </div>
+
+        <div class="row ask_question">
+            {{ form.content.errors }}
+            <label for='{{ form.content.id_for_label }}'>
+                <h6 class="col-1">Text</h6>
+
+            </label>
+            <textarea id='{{ form.content.id_for_label }}' style="height: 220px"
+                      class="col-9 pole_for_question text_pole"></textarea>
+        </div>
+
+        <div class="row ask_question">
+            {{ form.tags.errors }}
+            <label for='{{ form.tags.id_for_label }}'>
+                <h6 class="col-1">Tags</h6>
+            </label>
+            <input id='{{ form.tags.id_for_label }}' class="col-9 pole_for_question" type="text">
+        </div>
+        <input type="submit" value="ASK!">
+
+    </form>
+
 {% endblock %}
 

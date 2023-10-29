@@ -1,14 +1,10 @@
-from django.shortcuts import render
+import datetime
+
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 
-question1 = {
-    "id",
-    "title",
-    "content",
-    "answers_count",
-    "answers",
-    "tags"
-}
+from AskMe.forms import QuestionForm
+from AskMe.models import Question
 
 
 def makeQuestion(id: int, title: str, image_path: str, content: str, answers_count: int, answers: list, tags: list):
@@ -95,10 +91,49 @@ def ask(request):
     """
     Функция отображения страницы для создания вопроса.
     """
-    return render(
-        request,
-        'ask.html'
-    )
+
+    """
+    question = Question( title="aaaaa",content="sdadaddasa", image ="img/bobr.jpeg", answers_count= 0,
+                        tags = "tag1", answers="frfjnfkjnjckne")
+
+    question.save()
+    """
+    try:
+        # if this is a POST request we need to process the form data
+        if request.method == "POST":
+            # create a form instance and populate it with data from the request:
+            form = QuestionForm(request.POST)
+
+
+            # check whether it's valid:
+            if form.is_valid():
+                # process the data in form.cleaned_data as required
+                # ...
+                # redirect to a new URL:
+                data = form.cleaned_data
+
+                post_question1 = Question(title=data["title"], content=data["content"], image="img/bobr.jpeg",
+                                          answers_count=0,
+                                          tags=data["tags"], answers="Answers ddfdfdfd")
+                post_question1.save()
+                id = post_question1.id
+
+                return redirect(question, question_id=id)
+
+
+
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            form = QuestionForm()
+            return render(
+                request,
+                'ask.html',
+                {"form": form}
+            )
+    except Exception as e:
+        print(e)
+
+
 
 
 def login(request):
@@ -109,7 +144,8 @@ def login(request):
 
 
 def question(request, question_id):
-    item = questions[question_id]
+    # item = questions[question_id]
+    item = Question.objects.get(id=question_id)
     return render(
         request,
         'question.html',
@@ -137,7 +173,7 @@ def tag(request, tag_name):
         if tag_name in k["tags"]:
             questions_with_tag.append(k)
 
-    if len(questions_with_tag)==0:
+    if len(questions_with_tag) == 0:
         return render(
             request,
             'errors/not_found_tag.html',
@@ -166,6 +202,12 @@ def hot(request):
         'hot_questions.html',
         context={'questions': questionslist, 'pages': pages_counter}
     )
+
+
+def post_question(request):
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+        print(request.POST)
 
 
 def test(request):

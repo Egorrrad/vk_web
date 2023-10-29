@@ -210,3 +210,4 @@ ENV/
 # mkdocs documentation
 /site
 
+!/vk_web/local_settings.py

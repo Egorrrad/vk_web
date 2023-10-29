@@ -10,6 +10,7 @@ urlpatterns = [
     path('tag/<str:tag_name>', views.tag, name='tag'),
     path('settings', views.settings, name='settings'),
     path('hot', views.hot, name='hot_questions'),
+path('post_question', views.post_question, name='post_question'),
 
     path('test', views.test)
 ]
