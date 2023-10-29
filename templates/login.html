@@ -46,7 +46,7 @@
     </div>
     <div class="row ask_question">
         <h6 class="col-2">Login</h6>
-        <input class="col-9 pole_for_log" type="text">
+        <input class="col-9 pole_for_log" type="text" placeholder="askme@mail.ru">
     </div>
     <div class="row ask_question" style="margin-bottom: 40px">
         <h6 class="col-2">Password</h6>
@@ -54,7 +54,7 @@
     </div>
     <div class="row">
         <button class="col-9" style="margin-left: 145px; width: 90px">Log in!</button>
-        <a href="#" style="margin-left: 133px; margin-top: 10px">create new account</a>
+        <a href='{% url 'signup' %}' style="margin-left: 133px; margin-top: 10px">create new account</a>
     </div>
 
 {% endblock %}
