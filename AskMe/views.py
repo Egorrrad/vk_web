@@ -250,9 +250,12 @@ def signup(request):
 
 def tag(request, tag_name):
     questions_with_tag = []
+    """
     for k in questions:
         if tag_name in k["tags"]:
             questions_with_tag.append(k)
+             """
+    questions_with_tag = Tag.objects.get(tag_name=tag_name).questions.all()
 
     if len(questions_with_tag) == 0:
         return render(

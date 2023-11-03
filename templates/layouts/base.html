@@ -31,7 +31,7 @@
                 <div class="row" style="width: auto;margin-left: 30%">
                     <div class="col-2" style="margin-right: 10px">
                         {% if request.user.is_authenticated %}
-                            <img src='{% static user.image %}' alt="Logo" width="50" height="44"
+                            <img src='{% static user.profile.image %}' alt="Logo" width="50" height="44"
                                  class="d-inline-block align-text-top">
                         {% endif %}
                     </div>
