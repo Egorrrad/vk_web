@@ -15,9 +15,9 @@ class AddAnswerForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
+    username = forms.CharField(label="Login",widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "col-9 pole_for_log"}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
+    first_name = forms.CharField(label="NickName", widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={"class": "col-9 pole_for_log"}))
     password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput(attrs={"class": "col-9 pole_for_log"}))
 

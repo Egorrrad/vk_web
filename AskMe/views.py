@@ -234,6 +234,7 @@ def signup(request):
                 new_user.set_password(user_form.cleaned_data['password'])
                 # Save the User object
                 new_user.save()
+                login(request, new_user)
                 return redirect(index)
             else:
                 return render(
