@@ -30,16 +30,29 @@
             <div class="col-3">
                 <div class="row" style="width: auto;margin-left: 30%">
                     <div class="col-2" style="margin-right: 10px">
-                        <img src='{% static '/img/pingvin.png' %}' alt="Logo" width="50" height="44"
-                             class="d-inline-block align-text-top">
+                        {% if request.user.is_authenticated %}
+                            <img src='{% static user.image %}' alt="Logo" width="50" height="44"
+                                 class="d-inline-block align-text-top">
+                        {% endif %}
                     </div>
-                    <div class="col-8" style="margin-left: 20px">
-                        <a style="color:#fff">Dr. Pepper</a>
-                        <div class="row-cols-3">
-                            <a href='{% url 'settings' %}' style="color:#fff">settings</a>
-                            <a href="/" style="color:#fff ">log out</a>
+                    {% if request.user.is_authenticated %}
+                        <div class="col-8" style="margin-left: 20px">
+                            <a style="color:#fff">{{ user.username }}</a>
+                            <div class="row-cols-3">
+                                <a href='{% url 'settings' %}' style="color:#fff">settings</a>
+                                <a href='{% url 'logout_user' %}' style="color:#fff ">log out</a>
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+
+                        <div class="col-8" style="margin-left: 20px">
+                            <div class="row-cols-3">
+                                <a href='{% url 'login' %}' style="color:#fff; margin-right: 20px">log in</a>
+                                <a href='{% url 'signup' %}' style="color:#fff ">register</a>
+                            </div>
+                        </div>
+
+                    {% endif %}
                 </div>
 
 
@@ -52,24 +65,24 @@
     <div class="container">
         <div class="row">
 
-        <div class="col-8" style="margin-right: 105px">
-            {% block left-side %}
+            <div class="col-8" style="margin-right: 105px">
+                {% block left-side %}
 
-            {% endblock %}
-         </div>
+                {% endblock %}
+            </div>
 
-        <div class="col-3">
-            {% block right-side %}
+            <div class="col-3">
+                {% block right-side %}
 
                     {% include 'components/tags.html' %}
                     {% include 'components/best_members.html' %}
 
-            {% endblock %}
-        </div>
+                {% endblock %}
+            </div>
         </div>
     </div>
-{% block pagination %}
-{% endblock %}
+    {% block pagination %}
+    {% endblock %}
 </main>
 
 {% block scripts %}

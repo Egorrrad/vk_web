@@ -39,9 +39,12 @@
         <div class="question_text_urls">
             <a href='{% url 'question' question_id=item.id %}'>answer ({{ item.answers_count }})</a>
             <span>Tags:
-                {% for tag in item.tags %}
+
+                {% for tag in item.tags.all %}
                     <a href='{% url 'tag'  tag %}'>{{ tag }}</a>
                 {% endfor %}
+
+
                             </span>
         </div>
 

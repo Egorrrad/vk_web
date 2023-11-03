@@ -1,38 +1,28 @@
+{% load static %}
 <nav>
-    <ul class="pagination">
+    <ul id="pages" class="pagination">
+    {% if pages.first %}
         <li class="page-item">
             <a class="page-link" onclick="previouspage()" aria-label="Предыдущая">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        {% for page in pages %}
+    {% endif %}
+        {% for page in pages.items %}
             <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
         {% endfor %}
+    {% if pages.end %}
+    <li class="page-item"><a class="page-link">...</a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link"  href="?page={{ pages.enditem }}">{{ pages.enditem }}</a></li>
+    {% if pages.end %}
         <li class="page-item">
             <a class="page-link" onclick="nextpage()" aria-label="Следующая">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
+    {% endif %}
     </ul>
 </nav>
 
-<script>
-
-    function nextpage() {
-        const url = new URL(window.location);
-        let page_num = parseInt(url.searchParams.get('page')) + 1;
-        if (isNaN(page_num)){
-            page_num = 1;
-        }
-        window.location.href = '?page=' + page_num;
-    }
-
-    function previouspage() {
-        const url = new URL(window.location);
-        let page_num = parseInt(url.searchParams.get('page')) - 1;
-        if (page_num < 1 || isNaN(page_num)){
-            page_num = 1;
-        }
-        window.location.href = '?page=' + page_num;
-    }
-</script>
+<script src={% static 'js/pagination.js' %}> </script>

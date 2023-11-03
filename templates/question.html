@@ -9,17 +9,21 @@
     {% include 'components/question-item.html' %}
 
 
-     {% for answer in item.answers %}
+     {% for answer in item.answers.all %}
     {% include 'components/answer-item.html' %}
     {% endfor %}
 
 
-    <textarea class="row question" style="width: 600px;height: 220px">Enter your answer here</textarea>
 
-    <div class="row">
-        <button style="margin-top: 18px;width: 80px;height:50px">Answer</button>
+    <form action='{% url 'question' question_id=item.id %}' method="post">
+    {% csrf_token %}
+        {{ form.answer.errors }}
+        <div class="row ask_question">
+        {{ form.answer}}
+        </div>
 
-    </div>
+    <input  type="submit" value="Answer">
+</form>
 
 {% endblock %}
 

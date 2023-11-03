@@ -79,3 +79,24 @@ button.dislike-button{
     border-width: 2px;
     width: 300px;
 }
+
+
+.btn1 {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Стиль активного класса и кнопки при наведении курсора мыши */
+.active, .btn1:hover {
+  background-color: #666;
+  color: white;
+}
+
+
+.error_1{
+    color: darkred;
+}

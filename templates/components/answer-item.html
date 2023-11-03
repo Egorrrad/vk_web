@@ -32,13 +32,14 @@
     <div class="col-6 questionpanel">
         <h4 style="padding-bottom: 13px">{{ answer.title }}</h4>
         <p>
-            {{ answer.content }}
+            {{ answer.text }}
         </p>
 
         <div class="question_text_urls">
-            <a href="/static">answer ({{ answer.answers }})</a>
+            <a href="/">answer ({{ answer.answers.count }})</a>
             <span>Tags:
-                {% for tag in item.tags %}
+
+                {% for tag in item.tags.all %}
                     <a href='{% url 'tag'  tag %}'>{{ tag }}</a>
                 {% endfor %}
                             </span>
