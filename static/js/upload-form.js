@@ -1,3 +1,11 @@
+document.onkeydown = () => {
+    if(e.keyCode === 13) {
+        form.submit();
+    }
+}
+
+
+
 $(document).ready(function(){
 	var dropZone = $('#upload-container');
 

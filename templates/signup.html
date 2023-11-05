@@ -1,140 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/upload_form.css">
-    <title>Signup</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-        <div class="col-2">
-            <a class="navbar-brand" style="margin-left:90px" href="#">
-                AskMe
-            </a>
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href={% static "js/upload-form.js" %}>
+{% endblock %}
+{% block title %}Signup{% endblock %}
+
+
+
+
+
+{% block left-side %}
+
+
+    <div class="col-4" style="margin-bottom: 30px">
+        <h2 style="margin-bottom: 30px">Registration</h2>
+        <span style="color:darkred"></span>
+    </div>
+    <form action='{% url 'signup' %}' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.widget_type.index %}
+            {% endif %}
+            <div class="error_1"> {{ field.errors }} </div>
+
+            <div class="row ask_question">
+                <div class="col-2" style="margin-right: 10px">
+                    {{ field.label }}
+                </div>
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <input style="margin-left: 145px; width: 90px" type="submit" value="Register">
+    </form>
+
+    <!--
+        <div class="col-4" style="margin-bottom: 30px">
+            <h2 style="margin-bottom: 30px">Registration</h2>
+            <span style="color:darkred">Sorry, wrong password</span>
         </div>
-        <div class="col-7">
-            <form class="d-flex" role="search" style="margin-left: 70px">
-                <input style="width:580px" class="form-control me-2" type="search" placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+        <div class="row ask_question">
+            <h6 class="col-2">Login</h6>
+            <input class="col-9 pole_for_log" type="text">
+        </div>
+        <div class="row ask_question" style="margin-bottom: 40px">
+            <h6 class="col-2">Email</h6>
+            <input class="col-9 pole_for_log" type="text">
+        </div>
+        <div class="row ask_question" style="margin-bottom: 40px">
+            <h6 class="col-2">NickName</h6>
+            <input class="col-9 pole_for_log" type="text">
+        </div>
+        <div class="row ask_question" style="margin-bottom: 40px">
+            <h6 class="col-2">Password</h6>
+            <input class="col-9 pole_for_log" type="password" aria-describedby="passwordHelpBlock">
+        </div>
+        <div class="row ask_question" style="margin-bottom: 40px">
+            <h6 class="col-2">Rereat password</h6>
+            <input class="col-9 pole_for_log" type="password" aria-describedby="passwordHelpBlock">
+        </div>
+        <div class="row ask_question" style="margin-bottom: 40px">
+            <h6 class="col-2">Upload avatar</h6>
+
+
+            <form class="col-9" style="padding: unset" id="upload-container" method="POST" action="#">
+                <input id="file-input-image" type="file" name="file" multiple>
+                <label for="file-input-image"><img style="margin-left: 29%" id="upload-image"
+                                                   src="{% static 'img/upload.svg' %}"></label>
+                <div>
+                    <input id="file-input" type="file" name="file" multiple>
+                    <label for="file-input">Выберите файл</label>
+                    <span>или перетащите его сюда</span>
+                </div>
             </form>
         </div>
-
-        <div class="col-3">
-            <div class="row" style="width: auto;margin-left: 30%">
-                <div class="col-2" style="margin-right: 10px">
-                    <img src="../static/img/pingvin.png" alt="Logo" width="50" height="44"
-                         class="d-inline-block align-text-top">
-                </div>
-                <div class="col-8" style="margin-left: 20px">
-                    <a style="color:#fff">Dr. Pepper</a>
-                    <div class="row-cols-3">
-                        <a href="/" style="color:#fff">settings</a>
-                        <a href="/" style="color:#fff ">log out</a>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-</nav>
-
-<main class="container">
-    <div class="container">
         <div class="row">
-            <div class="col-8" style="margin-right: 105px">
-                <div class="col-4" style="margin-bottom: 30px">
-                    <h2 style="margin-bottom: 30px">Registration</h2>
-                    <span style="color:darkred">Sorry, wrong password</span>
-                </div>
-                <div class="row ask_question">
-                    <h6 class="col-2">Login</h6>
-                    <input class="col-9 pole_for_log" type="text">
-                </div>
-                <div class="row ask_question" style="margin-bottom: 40px">
-                    <h6 class="col-2">Email</h6>
-                    <input class="col-9 pole_for_log" type="text">
-                </div>
-                <div class="row ask_question" style="margin-bottom: 40px">
-                    <h6 class="col-2">NickName</h6>
-                    <input class="col-9 pole_for_log" type="text">
-                </div>
-                <div class="row ask_question" style="margin-bottom: 40px">
-                    <h6 class="col-2">Password</h6>
-                    <input class="col-9 pole_for_log" type="password" aria-describedby="passwordHelpBlock">
-                </div>
-                <div class="row ask_question" style="margin-bottom: 40px">
-                    <h6 class="col-2">Rereat password</h6>
-                    <input class="col-9 pole_for_log" type="password" aria-describedby="passwordHelpBlock">
-                </div>
-                <div class="row ask_question" style="margin-bottom: 40px">
-                    <h6 class="col-2">Upload avatar</h6>
-
-
-                    <form class="col-9" style="padding: unset" id="upload-container" method="POST" action="#">
-                        <input id="file-input-image" type="file" name="file" multiple>
-                        <label for="file-input-image"><img style="margin-left: 29%" id="upload-image"
-                                                           src="../static/img/upload.svg"></label>
-                        <div>
-                            <input id="file-input" type="file" name="file" multiple>
-                            <label for="file-input">Выберите файл</label>
-                            <!--<span>или перетащите его сюда</span>-->
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <button class="col-9" style="margin-left: 145px; width: 90px">Register</button>
-                </div>
-
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <h3 style="padding-bottom: 20px">Popular Tags</h3>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">perl</span>
-                        <span class="tag" style="color:red">python</span>
-                        <span class="tag" style="color:black">TechnoPark</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:darkred">MySQL</span>
-                        <span class="tag" style="color:forestgreen">django</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">Mail.Ru</span>
-                        <span class="tag" style="color:darkcyan">Firefox</span>
-                    </div>
-                </div>
-                <div class="row best_members">
-                    <h3 style="padding-bottom: 20px">Best Members</h3>
-                    <a class="member" href="/">Member 1</a>
-                    <a class="member" href="/">Member 2</a>
-                    <a class="member" href="/">Member 3</a>
-                    <a class="member" href="/">Member 4</a>
-                    <a class="member" href="/">Member 5</a>
-                    <a class="member" href="/">Member 6</a>
-                </div>
-            </div>
+            <button class="col-9" style="margin-left: 0px; width: 90px">Register</button>
         </div>
-    </div>
-</main>
+-->
 
-<script src="../static/js/upload-form.js">
-</script>
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-body-secondary">© 2023 AskMe</p>
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-        </ul>
-    </footer>
-</div>
-
-
-</body>
-</html>
+{% endblock %}

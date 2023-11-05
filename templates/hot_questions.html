@@ -1,15 +1,15 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %}AskMe{% endblock %}
+{% block title %}Hot questions{% endblock %}
 
-{% block left-side %}
+            {% block left-side %}
                 <div class="row" style="margin-bottom: 60px">
                     <div class="col-4">
-                        <h2>New Questions</h2>
+                        <h2>Hot Questions</h2>
                     </div>
                     <div class="col-3" style="margin-top: 12px">
-                        <a href='{% url 'hot_questions' %}'>Hot Questions</a>
+                        <a href='{% url 'index' %}'>New Questions</a>
                     </div>
                 </div>
 
@@ -21,10 +21,10 @@
 
 {% endblock %}
 
-{% block pagination%}
+{% block pagination %}
 {% include 'components/pagination.html' %}
 {% endblock %}
 
 {% block scripts %}
-    <script src='{% static 'js/like-counter.js' %}'></script>
+    <script src={% static "js/like-counter.js" %}></script>
 {% endblock %}

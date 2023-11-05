@@ -1,114 +1,68 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/main.css">
-    <title>Ask</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-        <div class="col-2">
-            <a class="navbar-brand" style="margin-left:90px" href="#">
-                AskMe
-            </a>
-        </div>
-        <div class="col-7">
-            <form class="d-flex" role="search" style="margin-left: 70px">
-                <input style="width:580px" class="form-control me-2" type="search" placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-
-        <div class="col-3">
-            <div class="row" style="width: auto;margin-left: 30%">
-                <div class="col-2" style="margin-right: 10px">
-                    <img src="../static/img/pingvin.png" alt="Logo" width="50" height="44"
-                         class="d-inline-block align-text-top">
-                </div>
-                <div class="col-8" style="margin-left: 20px">
-                    <a style="color:#fff">Dr. Pepper</a>
-                    <div class="row-cols-3">
-                        <a href="/" style="color:#fff">settings</a>
-                        <a href="/" style="color:#fff ">log out</a>
-                    </div>
-                </div>
-            </div>
+{% extends "layouts/base.html" %}
 
 
-        </div>
-    </div>
+{% block title %}Ask{% endblock %}
 
-</nav>
+{% block left-side %}
 
-<main class="container">
     <div class="row" style="padding-bottom: 50px">
         <div class="col-4">
             <h2>New Question</h2>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8" style="margin-right: 105px">
-                <div class="row ask_question">
-                    <h6 class="col-1">Title</h6>
-                    <input class="col-9 pole_for_question" type="text">
+    <form action='{% url 'ask' %}' method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="error_1"> {{ field.errors }}</div>
+            <div class="row ask_question">
+                <div class="col-1" style="margin-right: 10px">
+                    <label for= {{ field.id_for_label }}>{{ field.label }}</label>
                 </div>
-                <div class="row ask_question">
-                    <h6 class="col-1">Text</h6>
-                    <textarea style="height: 220px" class="col-9 pole_for_question"></textarea>
-                </div>
-                <div class="row ask_question">
-                    <h6 class="col-1">Tags</h6>
-                    <input class="col-9 pole_for_question" type="text">
-                </div>
-                <button style="margin-left: 60px">ASK!</button>
+                {{ field }}
             </div>
-            <div class="col-3">
-                <div class="row">
-                    <h3 style="padding-bottom: 20px">Popular Tags</h3>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">perl</span>
-                        <span class="tag" style="color:red">python</span>
-                        <span class="tag" style="color:black">TechnoPark</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:darkred">MySQL</span>
-                        <span class="tag" style="color:forestgreen">django</span>
-                    </div>
-                    <div class="row-cols-3 tags">
-                        <span class="tag" style="color:#1a1d20">Mail.Ru</span>
-                        <span class="tag" style="color:darkcyan">Firefox</span>
-                    </div>
-                </div>
-                <div class="row best_members">
-                    <h3 style="padding-bottom: 20px">Best Members</h3>
-                    <a class="member" href="/">Member 1</a>
-                    <a class="member" href="/">Member 2</a>
-                    <a class="member" href="/">Member 3</a>
-                    <a class="member" href="/">Member 4</a>
-                    <a class="member" href="/">Member 5</a>
-                    <a class="member" href="/">Member 6</a>
-                </div>
-            </div>
+        {% endfor %}
+        <input style="margin-left: 70px" type="submit" value="ASK!">
+    </form>
+
+
+    <!--
+    старый вид формы создания вопроса
+    <form method="POST" action='{% url 'ask' %}'>
+        {% csrf_token %}
+
+        <div class="row ask_question">
+            {{ form.title.errors }}
+            <label for='{{ form.title.id_for_label }}'><h6 class="col-1">Title</h6></label>
+            <input id='{{ form.title.id_for_label }}' class="col-9 pole_for_question" type="text">
         </div>
-    </div>
-</main>
+
+        <div class="row ask_question">
+            {{ form.content.errors }}
+            <label for='{{ form.content.id_for_label }}'>
+                <h6 class="col-1">Text</h6>
+
+            </label>
+            <textarea id='{{ form.content.id_for_label }}' style="height: 220px"
+                      class="col-9 pole_for_question text_pole"></textarea>
+        </div>
+
+        <div class="row ask_question">
+            {{ form.tags.errors }}
+            <label for='{{ form.tags.id_for_label }}'>
+                <h6 class="col-1">Tags</h6>
+            </label>
+            <input id='{{ form.tags.id_for_label }}' class="col-9 pole_for_question" type="text">
+        </div>
+        <input type="submit" value="ASK!">
+
+    </form>
+-->
+
+{% endblock %}
 
 
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-body-secondary">© 2023 Company, Inc</p>
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-        </ul>
-    </footer>
-</div>
 
 
-</body>
-</html>
+
+
