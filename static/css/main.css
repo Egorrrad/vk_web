@@ -80,18 +80,12 @@ button.dislike-button{
     width: 300px;
 }
 
-
-.btn1 {
-  border: none;
-  outline: none;
-  padding: 10px 16px;
-  background-color: #f1f1f1;
-  cursor: pointer;
-  font-size: 18px;
+a.page-link{
+    color: black;
 }
 
 /* Стиль активного класса и кнопки при наведении курсора мыши */
-.active, .btn1:hover {
+a.active_custom, .page-link:hover {
   background-color: #666;
   color: white;
 }
