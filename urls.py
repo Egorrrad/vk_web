@@ -14,8 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+
+from vk_web import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,3 +37,7 @@ urlpatterns += [
 handler404 = "AskMe.views.page_not_found_view"
 
 # Добавьте URL соотношения, чтобы перенаправить запросы с корневого URL, на URL приложения
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

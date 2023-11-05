@@ -129,6 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR / "uploads"
+
 
 #from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
 
