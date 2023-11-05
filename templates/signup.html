@@ -18,7 +18,7 @@
         <h2 style="margin-bottom: 30px">Registration</h2>
         <span style="color:darkred"></span>
     </div>
-    <form action='{% url 'signup' %}' method="post">
+    <form action='{% url 'signup' %}' method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             {% if field.widget_type.index %}
@@ -81,9 +81,4 @@
         </div>
 -->
 
-{% endblock %}
-
-
-{% block scripts %}
-    <script src={% static 'js/upload-form.js' %}></script>
 {% endblock %}

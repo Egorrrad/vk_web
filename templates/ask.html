@@ -11,22 +11,22 @@
         </div>
     </div>
 
-<form action='{% url 'ask' %}' method="post">
-    {% csrf_token %}
-    {% for field in form %}
-        {{ field.errors }}
-        <div class="row ask_question">
-        <div class = "col-1" style="margin-right: 10px">
-           <label for = {{ field.id_for_label }}>{{ field.label }}</label>
-        </div>
-    {{ field }}
-        </div>
-    {% endfor %}
-    <input style="margin-left: 70px" type="submit" value="ASK!">
-</form>
+    <form action='{% url 'ask' %}' method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="error_1"> {{ field.errors }}</div>
+            <div class="row ask_question">
+                <div class="col-1" style="margin-right: 10px">
+                    <label for= {{ field.id_for_label }}>{{ field.label }}</label>
+                </div>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input style="margin-left: 70px" type="submit" value="ASK!">
+    </form>
 
 
-<!--
+    <!--
     старый вид формы создания вопроса
     <form method="POST" action='{% url 'ask' %}'>
         {% csrf_token %}

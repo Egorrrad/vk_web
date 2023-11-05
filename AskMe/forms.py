@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 
@@ -14,12 +13,21 @@ class AddAnswerForm(forms.Form):
         widget=forms.Textarea(attrs={"class": "col-9 pole_for_question", "placeholder": "Enter your answer here"}))
 
 
+class SettingsForm(forms.Form):
+    username = forms.CharField(label="Login", widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "col-9 pole_for_log"}))
+    first_name = forms.CharField(label="NickName", widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
+
+    image = forms.ImageField(required=False, label="Upload avatar", widget=forms.FileInput(attrs={"class": "col-9"}))
+
+
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(label="Login",widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
+    username = forms.CharField(label="Login", widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "col-9 pole_for_log"}))
     first_name = forms.CharField(label="NickName", widget=forms.TextInput(attrs={"class": "col-9 pole_for_log"}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={"class": "col-9 pole_for_log"}))
-    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput(attrs={"class": "col-9 pole_for_log"}))
+    password2 = forms.CharField(label='Repeat password',
+                                widget=forms.PasswordInput(attrs={"class": "col-9 pole_for_log"}))
 
     image = forms.ImageField(required=False, label="Upload avatar", widget=forms.FileInput(attrs={"class": "col-9"}))
 

@@ -2,38 +2,13 @@ import datetime
 import math
 
 from django.contrib.auth import logout, authenticate, login
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 
 from AskMe.forms import *
 from AskMe.models import *
-
-
-def makeQuestion(id: int, title: str, image_path: str, content: str, answers_count: int, answers: list, tags: list):
-    question = {
-        "id": id,
-        "title": title,
-        "image": image_path,
-        "content": content,
-        "answers_count": answers_count,
-        "answers": answers,
-        "tags": tags
-    }
-    return question
-
-
-questions = [
-    {
-        "id": i,
-        "title": f"quesion {i}",
-        "content": f"aaaaaaaa {i}",
-        "image": "img/bobr.jpeg",
-        "answers_count": i,
-        "answers": ["aaaaa", "aaaaaa"],
-        "tags": ["tag1", "tag2"]
-    } for i in range(10)
-]
 
 
 def paginate(request, objects, per_page=5):
@@ -84,6 +59,14 @@ def isEmptyQuestions(request, questionslist, pages_counter):
         )
     return 0
 
+def add_image_profile(user, request):
+    file = request.FILES['image']
+    fs = FileSystemStorage()
+    filename = fs.save("user_" + str(user.id) + "/avatar."+str(file.name).split(".")[1], file)
+    #file_url = fs.url(filename)
+    profile = Profile.objects.get_or_create(user=user)[0]
+    profile.image = filename
+    profile.save()
 
 def index(request):
     """
@@ -110,32 +93,40 @@ def ask(request):
     """
 
     try:
-        # if this is a POST request we need to process the form data
         if request.method == "POST":
-            # create a form instance and populate it with data from the request:
             form = QuestionForm(request.POST)
-
-            # check whether it's valid:
             if form.is_valid():
-                # process the data in form.cleaned_data as required
-                # ...
-                # redirect to a new URL:
                 data = form.cleaned_data
 
                 print(data)
 
-                post_question1 = Question(title=data["title"], content=data["content"])
-                # сначала сохраним
-                post_question1.save()
+                if request.user.is_authenticated:
+                    user = User.objects.get(username=request.user)
+                    post_question1 = Question.objects.create(title=data["title"], content=data["content"],
+                                                             user=user)
 
-                post_question1.tags.create(tag_name=data["tags"])
-                id = post_question1.id
+                    question_model_type = ContentType.objects.get_for_model(post_question1)
+                    # добавление лайка
+                    # Like.objects.create(content_type=question_model_type, object_id=post_question1.id, user=user)
 
-                return redirect(question, question_id=id)
+                    tags = str(data["tags"]).split(" ")
+                    for elem in tags:
+                        tag_elem = Tag.objects.get_or_create(tag_name=elem)
+                        post_question1.tags.add(tag_elem[0].id)
+                        # post_question1.tags.create(id=tag_elem[0].id)
 
+                    id = post_question1.id
 
+                    return redirect(question, question_id=id)
+                else:
+                    # raise forms.ValidationError('You must be logged in')
+                    form.add_error('title', "You must be logged in!")
+                    return render(
+                        request,
+                        'ask.html',
+                        {"form": form}
+                    )
 
-        # if a GET (or any other method) we'll create a blank form
         else:
             form = QuestionForm()
             return render(
@@ -180,25 +171,20 @@ def question(request, question_id):
     form = AddAnswerForm()
 
     try:
-        # if this is a POST request we need to process the form data
         if request.method == "POST":
-            # create a form instance and populate it with data from the request:
             form = AddAnswerForm(request.POST)
-            # print(form)
-            # check whether it's valid:
             if form.is_valid():
-                # process the data in form.cleaned_data as required
-                # ...
-                # redirect to a new URL:
-                data = form.cleaned_data
+                if request.user.is_authenticated:
+                    data = form.cleaned_data
+                    item.answers.create(text=data["answer"], user = request.user)
+                else:
+                    form.add_error('answer', "You must be logged in!")
+                    return render(
+                        request,
+                        'question.html',
+                        context={'item': item, 'form': form}
+                    )
 
-                print(data)
-
-                item.answers.create(text=data["answer"], user_id=1)
-
-
-
-        # if a GET (or any other method) we'll create a blank form
         else:
             form = AddAnswerForm()
             return render(
@@ -218,44 +204,69 @@ def question(request, question_id):
 
 
 def settings(request):
+    user_now = request.user
+    if request.method == "POST":
+        form = SettingsForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.get(username=user_now.username)
+            # user.profile.image
+            print(data)
+            user.username = data["username"]
+            user.first_name = data["first_name"]
+            user.email = data["email"]
+            user.save()
+            if request.FILES:
+                add_image_profile(user, request)
+
+            return render(
+            request,
+            'settings.html', context={"form": form}
+            )
+
+        else:
+            print(form.is_valid())
+
+    profile = User.objects.get(username=user_now.username).profile
+    form = SettingsForm(initial={'username': profile.user.username, 'first_name': profile.user.first_name,
+                                 'email': profile.user.email,
+                                 #'image': profile.image.url
+                                 })
+    #print(form)
+    # form.set_values(user_now.username, user_now.email, user_now.first_name)
     return render(
         request,
-        'settings.html'
+        'settings.html', context={"form": form}
     )
 
 
 def signup(request):
-        if request.method == 'POST':
-            user_form = RegisterForm(request.POST)
-            if user_form.is_valid():
-                # Create a new user object but avoid saving it yet
-                new_user = user_form.save(commit=False)
-                # Set the chosen password
-                new_user.set_password(user_form.cleaned_data['password'])
-                # Save the User object
-                new_user.save()
-                login(request, new_user)
-                return redirect(index)
-            else:
-                return render(
-                    request,
-                    'signup.html', context={"form": user_form}
-                    )
+    if request.method == 'POST':
+        user_form = RegisterForm(request.POST, request.FILES)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            user = User.objects.get(username=new_user.username)
+            print(user)
+            if request.FILES:
+                add_image_profile(user, request)
+            login(request, new_user)
+            return redirect(index)
+        else:
+            return render(
+                request,
+                'signup.html', context={"form": user_form}
+            )
 
-        form = RegisterForm()
-        return render(
+    form = RegisterForm()
+    return render(
         request,
         'signup.html', context={"form": form}
-        )
+    )
 
 
 def tag(request, tag_name):
-    questions_with_tag = []
-    """
-    for k in questions:
-        if tag_name in k["tags"]:
-            questions_with_tag.append(k)
-             """
     questions_with_tag = Tag.objects.get(tag_name=tag_name).questions.all()
 
     if len(questions_with_tag) == 0:

@@ -17,7 +17,7 @@
 
     <form action='{% url 'question' question_id=item.id %}' method="post">
     {% csrf_token %}
-        {{ form.answer.errors }}
+        <div class="error_1">{{ form.answer.errors }}</div>
         <div class="row ask_question">
         {{ form.answer}}
         </div>

@@ -12,9 +12,29 @@
 </head>
 <body>
 {% block navbar %}
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+
         <div class="container-fluid">
-            <div class="col-2">
+
+            <div class="dropdown1 navbar1 col-0">
+                <button class="dropbtn">
+                    <svg xmlns='{% static 'img/list.svg' %}' width="16" height="16" fill="currentColor"
+                         class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{% url 'index' %}">Home</a>
+                    <a href="{% url 'ask' %}">Ask</a>
+
+                </div>
+            </div>
+
+            <div class="col-1">
                 <a class="navbar-brand" style="margin-left:90px" href={% url 'index' %}>
                     AskMe
                 </a>
@@ -31,7 +51,7 @@
                 <div class="row" style="width: auto;margin-left: 30%">
                     <div class="col-2" style="margin-right: 10px">
                         {% if request.user.is_authenticated %}
-                            <img src='{% static user.profile.image %}' alt="Logo" width="50" height="44"
+                            <img src='{{ user.profile.image.url }}' alt="Logo" width="50" height="44"
                                  class="d-inline-block align-text-top">
                         {% endif %}
                     </div>

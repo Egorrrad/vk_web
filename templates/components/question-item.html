@@ -1,7 +1,7 @@
 {% load static %}
 <div class="row question">
     <div class="col-2">
-        <img src='{% static item.image %}' width="130" height="130">
+        <img src='{{ item.user.profile.image.url }}' width="130" height="130">
         <div style="padding-top: 9px">
             <div class="row" style="margin-top: 10px">
                 <div class="like" id='like_{{ item.id }}'>
@@ -22,7 +22,7 @@
                         <span class="visually-hidden">Button</span>
                     </button>
 
-                    <span class="like-count">{{ item.likecount }}</span>
+                    <span class="like-count">{{ item.total_likes }}</span>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
             {{ item.content }}
         </p>
         <div class="question_text_urls">
-            <a href='{% url 'question' question_id=item.id %}'>answer ({{ item.answers_count }})</a>
+            <a href='{% url 'question' question_id=item.id %}'>answer ({{ item.answers.count }})</a>
             <span>Tags:
 
                 {% for tag in item.tags.all %}

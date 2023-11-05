@@ -10,8 +10,32 @@
 
 {% block left-side %}
     <div class="col-4">
-        <h2 style="margin-bottom: 60px">Settings: Dr. Pepper</h2>
+        <h2 style="margin-bottom: 60px">Settings: {{ user.username }}</h2>
     </div>
+    <form action='{% url 'settings' %}' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.widget_type.index %}
+            {% endif %}
+            <div class="error_1"> {{ field.errors }} </div>
+
+            <div class="row ask_question">
+                <div class="col-2" style="margin-right: 10px">
+                    {{ field.label }}
+                </div>
+                {{ field }}
+            </div>
+        {% endfor %}
+    <span>Your avatar now:</span>
+    <div class="col-9" style="margin-left: 145px; margin-bottom: 30px">
+         <img src="{{ user.profile.image.url }}" alt="Now avatar" width="100px" height="100px">
+    </div>
+        <input style="margin-left: 145px; width: 90px" type="submit" value="Save">
+    </form>
+
+
+
+    <!--
     <div class="row ask_question">
         <h6 class="col-2">Login</h6>
         <input class="col-9 pole_for_log" type="text">
@@ -35,7 +59,7 @@
             <div>
                 <input id="file-input" type="file" name="file" multiple>
                 <label for="file-input">Выберите файл</label>
-                <!--<span>или перетащите его сюда</span>-->
+                <span>или перетащите его сюда</span>
             </div>
         </form>
     </div>
@@ -43,9 +67,8 @@
         <button class="col-9" style=" width: 90px">Save</button>
     </div>
 
+     -->
+
 
 {% endblock %}
 
-{% block scripts %}
-    <script src={% static 'js/upload-form.js' %}></script>
-{% endblock %}
