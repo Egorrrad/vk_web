@@ -26,6 +26,6 @@ if __name__ == '__main__':
 
 # pip install -r requirements.txt
 
-# python3 -m venv vk_webVenv
+# python3 -m venv venv
 #
-# source vk_webVenv/bin/activate
+# source venv/bin/activate

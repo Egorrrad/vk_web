@@ -15,14 +15,16 @@
         <span class="tag" style="color:#1a1d20">Mail.Ru</span>
         <span class="tag" style="color:darkcyan">Firefox</span>
     </div>
+
     <!--
     {{ tags_popular }}
+
     {% for tag_pop in tags_popular %}
-        <span class="tag" style="color:#1a1d20">{{ tag_pop }}</span>
         <div class="row-cols-3 tags">
-        <span class="tag" style="color:#1a1d20">Mail.Ru</span>
-        <span class="tag" style="color:darkcyan">Firefox</span>
+        {% for tag_pop_elem in tag_pop %}
+            <span class="tag" style="color:{{ tag_pop_elem.color}}">{{ tag_pop_elem.name}}</span>
+            {% endfor %}
     </div>
     {% endfor %}
-    -->
+-->
 </div>

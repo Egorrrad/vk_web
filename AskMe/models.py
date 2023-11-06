@@ -19,7 +19,7 @@ def user_directory_path(instance, filename):
 class Like(models.Model):
     user = models.ForeignKey(User,
                              related_name='likes',
-                             on_delete=models.CASCADE)
+                             on_delete=models.PROTECT)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

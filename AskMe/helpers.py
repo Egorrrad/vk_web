@@ -1,4 +1,5 @@
 import math
+import random
 
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
@@ -80,6 +81,50 @@ def get_popular_tags():
     array.sort(key=custom_key, reverse=True)
     # print(array[:7])
     tags = []
+    mas = []
+    c = 0
     for k in array[:7]:
-        tags.append(k[0])
+        if c < 3:
+            # tags.append(k[0])
+            mas.append({'name': k[0], 'color': getRandomCol()})
+            c += 1
+        else:
+            c = 0
+            tags.append(mas)
+            mas = []
+
+    # print(tags)
     return tags
+
+
+def htmlcolor(r, g, b):
+    def _chkarg(a):
+        if isinstance(a, int):  # clamp to range 0--255
+            if a < 0:
+                a = 0
+            elif a > 255:
+                a = 255
+        elif isinstance(a, float):  # clamp to range 0.0--1.0 and convert to integer 0--255
+            if a < 0.0:
+                a = 0
+            elif a > 1.0:
+                a = 255
+            else:
+                a = int(round(a * 255))
+        else:
+            raise ValueError('Arguments must be integers or floats.')
+        return a
+
+    r = _chkarg(r)
+    g = _chkarg(g)
+    b = _chkarg(b)
+    return '#{:02x}{:02x}{:02x}'.format(r, g, b)
+
+
+def getRandomCol():
+    r = hex(random.randrange(0, 255))[2:]
+    g = hex(random.randrange(0, 255))[2:]
+    b = hex(random.randrange(0, 255))[2:]
+
+    random_col = '#' + r + g + b
+    return random_col
