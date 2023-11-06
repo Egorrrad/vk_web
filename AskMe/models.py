@@ -15,6 +15,7 @@ class QuestionManager(models.Manager):
 def user_directory_path(instance, filename):
     return 'user_{0}/ {1}'.format(instance.user.id, filename)
 
+
 class Like(models.Model):
     user = models.ForeignKey(User,
                              related_name='likes',
@@ -45,6 +46,10 @@ class Tag(models.Model):
 
     def __str__(self):
         return f"{self.tag_name}"
+
+    @property
+    def total_tags(self):
+        return self.questions.count()
 
 
 class Profile(models.Model):

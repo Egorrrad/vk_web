@@ -23,3 +23,9 @@ if __name__ == '__main__':
 
 # pip freeze
 # pip freeze > requirements.txt
+
+# pip install -r requirements.txt
+
+# python3 -m venv vk_webVenv
+#
+# source vk_webVenv/bin/activate
