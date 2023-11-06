@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lo^nkte)dr3ass6h*tq52*jsb^jj&_&s4+ih_r6(nz=2o42t@7'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,8 +77,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'AskME',
-        'USER': 'root',
+        'NAME': 'name',
+        'USER': 'user',
         'PASSWORD': 'rootegor',
     }
 }
@@ -132,6 +132,9 @@ LOGIN_REDIRECT_URL = '/'
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / "uploads"
 
+# from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
 
-#from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
+import local_settings
 
+DATABASES = local_settings.DATABASES
+SECRET_KEY = local_settings.SECRET_KEY
