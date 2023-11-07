@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,12 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lo^nkte)dr3ass6h*tq52*jsb^jj&_&s4+ih_r6(nz=2o42t@7'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
+
 
 # Application definition
 
@@ -77,8 +78,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'AskME',
-        'USER': 'root',
+        'NAME': 'name',
+        'USER': 'user',
         'PASSWORD': 'rootegor',
     }
 }
@@ -116,11 +117,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+if DEBUG:
+    STATIC_DIR = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+    ALLOWED_HOSTS += ['*']
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -132,6 +143,9 @@ LOGIN_REDIRECT_URL = '/'
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / "uploads"
 
+# from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
 
-#from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
+import local_settings
 
+DATABASES = local_settings.DATABASES
+SECRET_KEY = local_settings.SECRET_KEY

@@ -90,7 +90,7 @@ cmake-build-debug/
 /out/
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
+
 
 # JIRA plugin
 atlassian-ide-plugin.xml
@@ -211,4 +211,3 @@ ENV/
 # mkdocs documentation
 /site
 
-!/vk_web/local_settings.py
