@@ -1,5 +1,6 @@
 import random
 
+from faker import Faker
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.utils.crypto import get_random_string
@@ -22,11 +23,13 @@ class Command(BaseCommand):
 оценок пользователей - ratio * 200;
         """
         total = kwargs['ratio']
-
+        fake = Faker()
+        # images_pack = "vk_web/static/img/test"
         for i in range(total):
             try:
+                name = fake.name().split(" ")
                 User.objects.create_user(username=get_random_string(length=10), email='', password='123',
-                                         first_name=get_random_string(length=10))
+                                         first_name=name[0], last_name=name[1])
 
                 Tag.objects.get_or_create(tag_name=get_random_string(length=5))
             except Exception as e:
@@ -34,8 +37,8 @@ class Command(BaseCommand):
 
         for i in range(total * 10):
             try:
-                Question.objects.create(title=get_random_string(length=15), user_id=random.randint(1, total),
-                                        content=get_random_string(length=200))
+                Question.objects.create(title=fake.city(), user_id=random.randint(1, total),
+                                        content=fake.text())
             except Exception as e:
                 continue
 
@@ -43,7 +46,7 @@ class Command(BaseCommand):
             try:
                 user = User.objects.get(id=random.randint(1, total))
                 item = Question.objects.get(id=random.randint(1, total))
-                item.answers.create(text=get_random_string(length=100), user=user)
+                item.answers.create(text=fake.text(), user=user)
             except Exception as e:
                 continue
 
