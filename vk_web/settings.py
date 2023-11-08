@@ -121,17 +121,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 if DEBUG:
-    STATIC_DIR = os.path.join(BASE_DIR, 'static')
+    STATIC_DIR = BASE_DIR / 'static'
     STATICFILES_DIRS = [
-        BASE_DIR / "static",
+        BASE_DIR / 'static',
     ]
     ALLOWED_HOSTS += ['*']
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-    STATICFILES_FINDERS = (
-        'django.contrib.staticfiles.finders.FileSystemFinder',
-        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -141,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 
 MEDIA_URL = '/uploads/'
-MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
 # from local_settings import DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
 
