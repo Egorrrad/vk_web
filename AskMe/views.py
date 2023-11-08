@@ -166,19 +166,19 @@ def settings(request):
                 add_image_profile(user, request)
 
             return render(
-            request,
-            'settings.html', context={"form": form}
+                request,
+                'settings.html', context={"form": form}
             )
 
         else:
             print(form.is_valid())
 
-    profile = User.objects.get(username=user_now.username).profile
-    form = SettingsForm(initial={'username': profile.user.username, 'first_name': profile.user.first_name,
-                                 'email': profile.user.email,
-                                 #'image': profile.image.url
+    user = User.objects.get(username=user_now.username)
+    form = SettingsForm(initial={'username': user.username, 'first_name': user.first_name,
+                                 'email': user.email,
+                                 # 'image': profile.image.url
                                  })
-    #print(form)
+    # print(form)
     # form.set_values(user_now.username, user_now.email, user_now.first_name)
     return render(
         request,
