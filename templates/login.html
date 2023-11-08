@@ -16,10 +16,10 @@
     <form action='{% url 'login' %}' method="post">
         {% csrf_token %}
         {% for field in form %}
-            {{ field.errors }}
+            <div class="error_1"> {{ field.errors }} </div>
             <div class="row ask_question">
                 <div class="col-2" style="margin-right: 10px">
-                   {{ field.label }}
+                    {{ field.label }}
                 </div>
                 {{ field }}
             </div>
