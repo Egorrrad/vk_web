@@ -96,9 +96,10 @@ def login_user(request):
                 else:
                     return HttpResponse('Disabled account')
             else:
-                return HttpResponse('Invalid login')
+                form.add_error('username', 'Invalid login or password')
+    else:
+        form = LoginForm()
 
-    form = LoginForm()
     return render(
         request,
         'login.html', context={"form": form}
