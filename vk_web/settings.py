@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'des2107.fvds.ru']
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AskMe',
+    'jquery'
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
+# STATIC_ROOT = BASE_DIR / 'static'
 if DEBUG:
     STATIC_DIR = BASE_DIR / 'static'
     STATICFILES_DIRS = [

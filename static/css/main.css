@@ -149,20 +149,25 @@ a.active_custom, .page-link:hover {
 
 /* Ссылки внутри выпадающего списка */
 .dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+
+.activelike {
+    background-color: red;
 }
 
 /* Добавить серый цвет фона для выпадающих ссылок при наведении курсора */
 .dropdown-content a:hover {
-  background-color: #ddd;
+    background-color: #ddd;
 }
 
 /* Показать выпадающее меню при наведении курсора */
 .dropdown1:hover .dropdown-content {
-  display: block;
+    display: block;
 }

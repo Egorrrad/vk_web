@@ -2,6 +2,23 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models import Sum
+
+
+class LikeDisManager(models.Manager):
+    use_for_related_fields = True
+
+    def likes(self):
+        # Забираем queryset с записями больше 0
+        return self.get_queryset().filter(vote__gt=0)
+
+    def dislikes(self):
+        # Забираем queryset с записями меньше 0
+        return self.get_queryset().filter(vote__lt=0)
+
+    def sum_rating(self):
+        # Забираем суммарный рейтинг
+        return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
 
 
 class QuestionManager(models.Manager):
@@ -16,13 +33,37 @@ def user_directory_path(instance, filename):
     return 'user_{0}/ {1}'.format(instance.user.id, filename)
 
 
-class Like(models.Model):
+'''
+class Like1(models.Model):
     user = models.ForeignKey(User,
                              related_name='likes',
                              on_delete=models.PROTECT)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+
+'''
+
+
+class LikeDis(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+
+    VOTES = (
+        (DISLIKE, 'Не нравится'),
+        (LIKE, 'Нравится')
+    )
+
+    vote = models.SmallIntegerField(choices=VOTES)
+    user = models.ForeignKey(User,
+                             related_name='likes',
+                             on_delete=models.PROTECT)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+    objects = LikeDisManager()
 
 
 class Comment(models.Model):
@@ -33,7 +74,7 @@ class Comment(models.Model):
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     text = models.CharField(max_length=400, null=False, blank=False)
-    likes = GenericRelation(Like)
+    likes = GenericRelation(LikeDis, related_query_name='answers')
     accepted = models.BooleanField(default=False)
     comments = models.ManyToManyField('Comment', null=True, blank=True, related_name='answers')
 
@@ -72,7 +113,8 @@ class Question(models.Model):
     # tags = models.CharField(max_length=200)
     tags = models.ManyToManyField('Tag', related_name='questions')
     # likes = models.ManyToManyField('Like', null=True, blank=True, related_name='questions')
-    likes = GenericRelation(Like)
+    # likes = GenericRelation(Like)
+    likes = GenericRelation(LikeDis, related_query_name='questions')
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

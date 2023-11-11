@@ -1,16 +1,15 @@
 import datetime
+import json
 import math
 
 from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from django.views import View
 
 from AskMe.forms import *
 from AskMe.helpers import *
 from AskMe.models import *
-
-
 
 
 def index(request):
@@ -122,7 +121,7 @@ def question(request, question_id):
             if form.is_valid():
                 if request.user.is_authenticated:
                     data = form.cleaned_data
-                    item.answers.create(text=data["answer"], user = request.user)
+                    item.answers.create(text=data["answer"], user=request.user)
                 else:
                     form.add_error('answer', "You must be logged in!")
                     return render(
@@ -245,6 +244,40 @@ def hot(request):
         'hot_questions.html',
         context={'questions': questionslist, 'pages': pages_counter}
     )
+
+
+class VotesView(View):
+    model = None  # Модель данных - Статьи или Комментарии
+    vote_type = None  # Тип комментария Like/Dislike
+
+    def post(self, request, question_id):
+        obj = self.model.objects.get(pk=question_id)
+        # GenericForeignKey не поддерживает метод get_or_create
+        try:
+            likedislike = LikeDis.objects.get(content_type=ContentType.objects.get_for_model(obj),
+                                              object_id=obj.id,
+                                              user=request.user)
+            if likedislike.vote is not self.vote_type:
+                likedislike.vote = self.vote_type
+                likedislike.save(update_fields=['vote'])
+                result = True
+            else:
+                likedislike.delete()
+                result = False
+        except LikeDis.DoesNotExist:
+            obj.likes.create(user=request.user, vote=self.vote_type)
+            result = True
+
+        print(request)
+        return HttpResponse(
+            json.dumps({
+                "result": result,
+                "like_count": obj.likes.likes().count(),
+                "dislike_count": obj.likes.dislikes().count(),
+                "sum_rating": obj.likes.sum_rating()
+            }),
+            content_type="application/json"
+        )
 
 
 def page_not_found_view(request, exception):
