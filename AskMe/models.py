@@ -33,25 +33,14 @@ def user_directory_path(instance, filename):
     return 'user_{0}/ {1}'.format(instance.user.id, filename)
 
 
-'''
-class Like1(models.Model):
-    user = models.ForeignKey(User,
-                             related_name='likes',
-                             on_delete=models.PROTECT)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
-
-'''
-
-
 class LikeDis(models.Model):
     LIKE = 1
     DISLIKE = -1
-
+    remove = 0
     VOTES = (
         (DISLIKE, 'Не нравится'),
-        (LIKE, 'Нравится')
+        (LIKE, 'Нравится'),
+        (remove, 'Убрал голос')
     )
 
     vote = models.SmallIntegerField(choices=VOTES)
@@ -64,6 +53,9 @@ class LikeDis(models.Model):
     content_object = GenericForeignKey()
 
     objects = LikeDisManager()
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.vote}"
 
 
 class Comment(models.Model):
@@ -94,7 +86,6 @@ class Tag(models.Model):
 
 
 class Profile(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.PROTECT, null=False, blank=False)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     image = models.ImageField(
         upload_to=user_directory_path,
@@ -107,20 +98,11 @@ class Question(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     title = models.CharField(max_length=100)
     content = models.CharField(max_length=3000)
-    # answers_count = models.IntegerField(default=0)
-    # answers = models.CharField(max_length=200)
     answers = models.ManyToManyField('Answer', null=True, blank=True, related_name='questions')
-    # tags = models.CharField(max_length=200)
     tags = models.ManyToManyField('Tag', related_name='questions')
-    # likes = models.ManyToManyField('Like', null=True, blank=True, related_name='questions')
-    # likes = GenericRelation(Like)
     likes = GenericRelation(LikeDis, related_query_name='questions')
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     objects = QuestionManager()
-
-    @property
-    def total_likes(self):
-        return self.likes.count()

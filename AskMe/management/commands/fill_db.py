@@ -79,7 +79,10 @@ class Command(BaseCommand):
                 question_model_type = ContentType.objects.get_for_model(item)
                 # добавление лайка
                 list = [-1, 1]
-                LikeDis.objects.create(content_type=question_model_type, object_id=item.id, user=user,
-                                       vote=list[random.randint(0, 1)])
+                if LikeDis.objects.filter(object_id=item.id, user=user).exists():
+                    continue
+                else:
+                    LikeDis.objects.create(content_type=question_model_type, object_id=item.id, user=user,
+                                           vote=list[random.randint(0, 1)])
             except Exception as e:
                 continue

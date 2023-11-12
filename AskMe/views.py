@@ -250,8 +250,8 @@ class VotesView(View):
     model = None  # Модель данных - Статьи или Комментарии
     vote_type = None  # Тип комментария Like/Dislike
 
-    def post(self, request, question_id):
-        obj = self.model.objects.get(pk=question_id)
+    def post(self, request, id):
+        obj = self.model.objects.get(pk=id)
         # GenericForeignKey не поддерживает метод get_or_create
         try:
             likedislike = LikeDis.objects.get(content_type=ContentType.objects.get_for_model(obj),
@@ -268,7 +268,7 @@ class VotesView(View):
             obj.likes.create(user=request.user, vote=self.vote_type)
             result = True
 
-        print(request)
+        # print(request)
         return HttpResponse(
             json.dumps({
                 "result": result,
@@ -278,7 +278,6 @@ class VotesView(View):
             }),
             content_type="application/json"
         )
-
 
 def page_not_found_view(request, exception):
     return render(request, 'errors/404.html', status=404)

@@ -1,54 +1,3 @@
-// Выбираем все элементы с классом like
-
-/*
-
-const likes = document.querySelectorAll('.like');
-
-// В каждом элементе выбираем плюс и минус. Навешиваем на событие клик функцию render()
-
-likes.forEach(like => {
-
-  //получаем id вопроса
-  const id = like.id.split('_')[1];
-  const plus = like.querySelector('.like-button');
-
-  const minus = like.querySelector('.dislike-button');
-
-  const counter_element = like.querySelector('.like-count');
-
-  let counter = 0;
-
-  plus.addEventListener('click', () => {
-      $.ajax({
-        url : "question" +"/" + id + "/" + like + "/",
-        type : 'POST',
-        data : { 'obj' : id },
-
-        success : function (json) {
-            //like.find("[data-count='like']").text(json.like_count);
-            //dislike.find("[data-count='dislike']").text(json.dislike_count);
-            counter = json.sum_rating
-        }
-    });
-    render(counter, counter_element);
-
-
-  });
-
-  minus.addEventListener('click', () => {
-      dislike()
-    render(--counter, counter_element)
-  });
-
-});
-
-// Функция обновляет текст
-const render = (counter, counter_element) => counter_element.innerText = counter;
-
-
- */
-
-
 const getCookie = (name) => {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -67,6 +16,18 @@ const getCookie = (name) => {
 
 const csrftoken = getCookie("csrftoken");
 
+function getlikesplace(type, pk) {
+    let counter_element;
+    if (type === "question") {
+        const alllikes = document.getElementById('like_' + pk);
+        counter_element = alllikes.querySelector('.like-count');
+    } else {
+        const alllikes = document.getElementById('likeanswer_' + pk);
+        counter_element = alllikes.querySelector('.like-count');
+    }
+    return counter_element
+}
+
 
 function like() {
     var like = $(this);
@@ -74,12 +35,7 @@ function like() {
     var pk = like.data('id');
     var action = like.data('action');
     var dislike = like.next();
-    //var alllikes = dislike.next()
-
-
-    const alllikes = document.getElementById('like_' + pk)
-    const counter_element = alllikes.querySelector('.like-count');
-
+    const counter_element = getlikesplace(type, pk);
     /*
         var btn = document.getElementById('likebut_'+pk);
         var list = btn.classList;
@@ -89,7 +45,6 @@ function like() {
 
 
      */
-    var url = "api" + "/" + "question" + "/" + pk + "/" + action + "/";
 
     $.ajax({
         url: "/api" + "/" + type + "/" + pk + "/" + action + "/",
@@ -98,14 +53,10 @@ function like() {
             'obj': pk,
         },
         headers: {'X-CSRFToken': csrftoken},
-        //CsrfViewMiddleware: csrftoken,
         success: function (json) {
             like.find("[data-count='like']").text(json.like_count);
             dislike.find("[data-count='dislike']").text(json.dislike_count);
-            //alllikes.find("[data-count='alllike']").text(json.sum_rating)
-            counter_element.innerText = json.sum_rating
-            //console.log(counter_element.innerText)
-            //console.log(alllikes.find("[data-count='alllike']"))
+            counter_element.innerText = json.sum_rating;
         }
     });
 
@@ -118,11 +69,7 @@ function dislike() {
     var pk = dislike.data('id');
     var action = dislike.data('action');
     var like = dislike.prev();
-    //var alllikes = dislike.next()
-    const alllikes = document.getElementById('like_' + pk)
-    const counter_element = alllikes.querySelector('.like-count');
-
-    var url = "api" + "/" + "question" + "/" + pk + "/" + action + "/";
+    const counter_element = getlikesplace(type, pk);
     $.ajax({
         url: "/api" + "/" + type + "/" + pk + "/" + action + "/",
         type: 'POST',
@@ -131,17 +78,13 @@ function dislike() {
         success: function (json) {
             dislike.find("[data-count='dislike']").text(json.dislike_count);
             like.find("[data-count='like']").text(json.like_count);
-            counter_element.innerText = json.sum_rating
-            //alllikes.find("[data-count='alllike']").text(json.sum_rating)
-            //console.log(alllikes.innerText)
-            //console.log(alllikes.find("[data-count='alllike']"))
+            counter_element.innerText = json.sum_rating;
         }
     });
 
     return false;
 }
 
-// Подключение обработчиков
 $(function () {
     $('[data-action="like"]').click(like);
     $('[data-action="dislike"]').click(dislike);
