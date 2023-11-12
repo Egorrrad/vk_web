@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Count
 
 
 class LikeDisManager(models.Manager):
@@ -23,7 +23,7 @@ class LikeDisManager(models.Manager):
 
 class QuestionManager(models.Manager):
     def hot(self):
-        return self.order_by("-likes")
+        return self.order_by('-answers')
 
     def new(self):
         return self.order_by("-created")
