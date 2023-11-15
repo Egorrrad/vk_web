@@ -141,10 +141,13 @@ def question(request, question_id):
         print(e)
 
     form = AddAnswerForm()
+    user_questiion = None
+    if item.user == request.user:
+        user_questiion = True
     return render(
         request,
         'question.html',
-        context={'item': item, 'form': form}
+        context={'item': item, 'usquestion': user_questiion, 'form': form}
     )
 
 
