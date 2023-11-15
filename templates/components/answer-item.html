@@ -45,10 +45,19 @@
         <div class="question_text_urls">
             <div class="row">
                 <a href="/" class="col-auto">comment ({{ answer.comments.count }})</a>
-                {% if usquestion %}
+                {% if request.user == item.user and answer.accepted %}
                     <form class="col-auto">
                         <label>
-                            <input type="checkbox" name="right_answer" value="True">
+                            <input type="checkbox" data-id="{{ answer.id }}" id="checkb_{{ answer.id }}"
+                                   name="right_answer" checked="checked">
+                            Right
+                        </label>
+                    </form>
+                {% elif request.user == item.user %}
+                    <form class="col-auto">
+                        <label>
+                            <input type="checkbox" data-id="{{ answer.id }}" id="checkb_{{ answer.id }}"
+                                   name="right_answer">
                             Right
                         </label>
                     </form>
@@ -62,12 +71,6 @@
             {% endif %}
         </div>
     </div>
-    <form class="col-auto" style="margin-left: 13px; margin-top: -10px">
-        <label>
-            <input type="checkbox" name="right_answer" value="True">
-            Right
-        </label>
-    </form>
     <!--
         <span class="col-auto" style="margin-left: 13px; margin-top: -10px">
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-three-dots"
@@ -77,16 +80,3 @@
         </span>
        -->
 </div>
-
-
-<script>
-    function fun1() {
-        var chbox;
-        chbox = document.getElementById('one');
-        if (chbox.checked) {
-            alert('Выбран');
-        } else {
-            alert('Не выбран');
-        }
-    }
-</script>

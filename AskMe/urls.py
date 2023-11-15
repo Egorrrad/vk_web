@@ -23,13 +23,18 @@ urlpatterns = [
     path('api/answer/<int:id>/dislike/',
          login_required(views.VotesView.as_view(model=Answer, vote_type=LikeDis.DISLIKE)),
          name='answer_dislike'),
+    path('api/answer/<int:id>/true/',
+         login_required(views.SaveChecbox.as_view(model=Answer, check_type=True)),
+         name='answer_true'),
+    path('api/answer/<int:id>/false/',
+         login_required(views.SaveChecbox.as_view(model=Answer, check_type=False)),
+         name='answer_false'),
     path('signup', views.signup, name='signup'),
     path('tag/<str:tag_name>', views.tag, name='tag'),
     path('settings', views.settings, name='settings'),
     path('hot', views.hot, name='hot_questions'),
 
     # path('post_question', views.post_question, name='post_question'),
-
 
 ]
 

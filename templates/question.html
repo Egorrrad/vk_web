@@ -19,14 +19,15 @@
     {% csrf_token %}
         <div class="error_1">{{ form.answer.errors }}</div>
         <div class="row ask_question">
-        {{ form.answer}}
+            {{ form.answer }}
         </div>
 
-    <input  type="submit" value="Answer">
-</form>
+        <input type="submit" value="Answer">
+    </form>
 
 {% endblock %}
 
 {% block scripts %}
     <script src={% static 'js/like-counter.js' %}></script>
+    <script src="{% static 'js/checkbox-right.js' %}"></script>
 {% endblock %}

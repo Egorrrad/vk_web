@@ -141,13 +141,10 @@ def question(request, question_id):
         print(e)
 
     form = AddAnswerForm()
-    user_questiion = None
-    if item.user == request.user:
-        user_questiion = True
     return render(
         request,
         'question.html',
-        context={'item': item, 'usquestion': user_questiion, 'form': form}
+        context={'item': item, 'form': form}
     )
 
 
@@ -281,6 +278,31 @@ class VotesView(View):
             }),
             content_type="application/json"
         )
+
+
+class SaveChecbox(View):
+    model = None  # Модель данных - Статьи или Комментарии
+    check_type = None  # Тип комментария Like/Dislike
+
+    def post(self, request, id):
+        obj = self.model.objects.get(pk=id)
+        # GenericForeignKey не поддерживает метод get_or_create
+        obj: Answer
+
+        obj.accepted = self.check_type
+
+        print(self.check_type, obj.accepted)
+        obj.save(update_fields=['accepted'])
+
+        # print(request)
+        return HttpResponse(
+            json.dumps({
+                "result": True,
+
+            }),
+            content_type="application/json"
+        )
+
 
 def page_not_found_view(request, exception):
     return render(request, 'errors/404.html', status=404)
