@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href={% static 'css/bootstrap.css' %}>
     <link rel="stylesheet" href={% static 'css/main.css' %}>
+    <script src= {% static 'js/jquery.js' %}></script>
     {% block links %} {% endblock %}
     <title>{% block title %}AskMe{% endblock %}</title>
 </head>
@@ -22,7 +23,7 @@
                     <svg xmlns='{% static 'img/list.svg' %}' width="16" height="16" fill="currentColor"
                          class="bi bi-list" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
-                              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
                     </svg>
 
                     <i class="fa fa-caret-down"></i>
@@ -30,7 +31,6 @@
                 <div class="dropdown-content">
                     <a href="{% url 'index' %}">Home</a>
                     <a href="{% url 'ask' %}">Ask</a>
-
                 </div>
             </div>
 

@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from django.urls import path
 
 from vk_web import settings
 
@@ -24,13 +26,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-
 # Используйте include() чтобы добавлять URL из каталога приложения
-from django.urls import include
-from django.urls import path
+
 
 urlpatterns += [
-     path('', include('AskMe.urls')),
+    path('', include('AskMe.urls')),
 
 ]
 
@@ -41,4 +41,3 @@ handler404 = "AskMe.views.page_not_found_view"
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)

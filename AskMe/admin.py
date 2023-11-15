@@ -7,7 +7,7 @@ admin.site.register(Tag)
 
 admin.site.register(Answer)
 
-admin.site.register(Like)
+admin.site.register(LikeDis)
 
 admin.site.register(Profile)
 
