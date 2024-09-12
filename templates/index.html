@@ -4,20 +4,20 @@
 {% block title %}AskMe{% endblock %}
 
 {% block left-side %}
-                <div class="row" style="margin-bottom: 60px">
-                    <div class="col-4">
-                        <h2>New Questions</h2>
-                    </div>
-                    <div class="col-3" style="margin-top: 12px">
-                        <a href='{% url 'hot_questions' %}'>Hot Questions</a>
-                    </div>
-                </div>
+    <div class="row" style="margin-bottom: 60px">
+        <div class="col-4">
+            <h2>Новые вузы</h2>
+        </div>
+        <div class="col-3" style="margin-top: 12px">
+            <a href='{% url 'univer' %}'>Hot Questions</a>
+        </div>
+    </div>
 
 
-                <!-- цикл для отображения постов, очень удобно -->
-                {% for item in questions %}
-                    {% include 'components/question-item.html' %}
-                {% endfor %}
+    <!-- цикл для отображения постов, очень удобно -->
+    {% for item in questions %}
+        {% include 'components/question-item.html' %}
+    {% endfor %}
 
 {% endblock %}
 
